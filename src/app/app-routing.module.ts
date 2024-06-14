@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { AuthPublicGuard } from './auth/guards/auth-public.guard';
+import { auth2Guard } from './auth/guards/auth2.guard';
+import { authPublic2Guard } from './auth/guards/auth-public2.guard';
 
 const routes: Routes = [
 
     {
       path: 'auth',
-      loadChildren: () => import('./auth/auth.module').then(m=>m.AuthModule)
+      loadChildren: () => import('./auth/auth.module').then(m=>m.AuthModule),
+      // canActivate: [AuthPublicGuard]
+      canActivate: [authPublic2Guard]
     },
     {
       path: 'heroes',
+      // canActivate: [AuthGuard],
+      canActivate: [auth2Guard],
+      // canMatch: [AuthGuard],
       loadChildren: () => import('./heroes/heroes.module').then(m=>m.HeroesModule)
     },
     {

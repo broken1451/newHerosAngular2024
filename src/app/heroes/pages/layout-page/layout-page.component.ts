@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Menu } from '../../interfaces/menu.interfaces';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout-page',
@@ -9,7 +11,11 @@ import { Menu } from '../../interfaces/menu.interfaces';
 export class LayoutPageComponent implements OnInit {
 
   
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
+
+  get currentUser(){
+    return this.authService.currentuser
+  }
 
   ngOnInit(): void {
   }
@@ -30,6 +36,10 @@ export class LayoutPageComponent implements OnInit {
       icon: 'search',
       url: '/heroes/search'
     }
-  ]
+  ];
 
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
+  }
 }
